@@ -17,10 +17,7 @@ class ParkingApiService
 
         $occupancyRecordsToInsert = [];
         
-        $facilities = Facility::with(['occupancy_records' => function ($query) {
-            $query->latest();
-        }])
-        ->get();
+        $facilities = Facility::with(['latest_occupancy_record'])->get();
 
         foreach($response->json()['features'] as $facility)
         {
