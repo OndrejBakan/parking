@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OccupancyRecord extends Model
 {
     use HasFactory;
-
+    
     protected $appends = [
         'spaces_public_percentages',
         'spaces_subscribers_percentages',
@@ -39,6 +39,4 @@ class OccupancyRecord extends Model
         return ['spaces_subscribers_vacant_percentage' => ($this->spaces_subscribers_vacant / $spacesSubscribersTotal) * 100,
                 'spaces_subscribers_occupied_percentage' => ($this->spaces_subscribers_occupied / $spacesSubscribersTotal) * 100];
     }
-
-
 }
