@@ -10,13 +10,13 @@ class OccupancyRecord extends Model
     use HasFactory;
     
     protected $appends = [
-        'spaces_public_percentages',
-        'spaces_subscribers_percentages',
+       //'spaces_public_percentages',
+       //'spaces_subscribers_percentages',
     ];
 
     public function getSpacesPublicPercentagesAttribute()
     {
-        if ($this->spaces_public_vacant === 0 && $this->spaces_public_occupied === 0)
+        if ($this->spaces_public_vacant == 0 && $this->spaces_public_occupied == 0)
             return [
                 'spaces_public_vacant_percentage' => NULL,
                 'spaces_public_occupied_percentage' => NULL];
@@ -29,7 +29,7 @@ class OccupancyRecord extends Model
 
     public function getSpacesSubscribersPercentagesAttribute()
     {
-        if ($this->spaces_subscribers_vacant === 0 && $this->spaces_subscribers_occupied === 0)
+        if ($this->spaces_subscribers_vacant == 0 && $this->spaces_subscribers_occupied == 0)
             return [
                 'spaces_subscribers_vacant_percentage' => NULL,
                 'spaces_subscribers_occupied_percentage' => NULL];

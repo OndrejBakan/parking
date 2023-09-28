@@ -13,7 +13,11 @@ class FacilityController extends Controller
      */
     public function index()
     {
-        return Facility::with('latest_occupancy_record')->get();
+        $facilities = Facility::with(['latest_occupancy_record'])->get();
+
+        return $facilities->each->latest_occupancy_record->each(function($q) {
+            $q->latest_occupancy_record->append(['spaces_public_percentages', 'spaces_subscribers_percentages']);
+        });
     }
 
     /**
@@ -29,7 +33,12 @@ class FacilityController extends Controller
      */
     public function show(Facility $facility)
     {
-        //
+        // $popular_times = $facility->popular_times->groupBy('day_of_week')->toArray();
+
+        // dump($popular_times);
+
+        // return view('facility.show')->with('facility', $facility);
+        return response()->json($facility->popular_times);
     }
 
     /**
