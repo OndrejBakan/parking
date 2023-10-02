@@ -25,11 +25,13 @@ class Facility extends Model
     {
         $facilityId = $this->id;
 
-        return OccupancyRecord::selectRaw('STRFTIME("%w", DATETIME(created_at, "localtime")) AS day_of_week')
-            ->selectRaw('STRFTIME("%H", DATETIME(created_at, "localtime")) AS hour_of_day')
+        $popularTimes =  OccupancyRecord::selectRaw('CAST(STRFTIME("%w", DATETIME(created_at, "localtime")) AS INTEGER) AS day_of_week')
+            ->selectRaw('CAST(STRFTIME("%H", DATETIME(created_at, "localtime")) AS INTEGER) AS hour_of_day')
             ->selectRaw('AVG((spaces_public_occupied * 100.0) / (spaces_public_occupied + spaces_public_vacant)) AS occupancy_percentage')
             ->where('facility_id', $facilityId)
             ->groupBy(['day_of_week', 'hour_of_day'])
             ->get();
+        
+        return $popularTimes->groupBy('day_of_week');
     }
 }
